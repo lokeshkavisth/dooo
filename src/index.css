@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  @apply hidden;
+}
+
+input {
+  @apply border border-gray-600 bg-gray-800 p-2 rounded-md w-full placeholder:capitalize;
+}
+textarea {
+  @apply border border-gray-600 bg-gray-800 p-2 rounded-md w-full placeholder:capitalize min-h-[200px] resize-none;
+}
+
+select {
+  @apply appearance-none bg-transparent border border-gray-600 bg-gray-800 p-2 rounded-md w-full  min-w-[200px] placeholder:capitalize capitalize;
+}
+
+p {
+  @apply text-sm leading-6;
+}
+
+h2 {
+  @apply text-lg font-medium;
+}
+
+h1 {
+  @apply text-4xl font-bold;
+}
