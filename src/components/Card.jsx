@@ -1,17 +1,47 @@
+/* eslint-disable react/prop-types */
 import { MdDeleteOutline } from "react-icons/md";
 import { BiSolidEditAlt } from "react-icons/bi";
 import TodoApi from "../api/TodoApi";
 import { useDispatch } from "react-redux";
-import { todos } from "../redux/actions/actions";
+import { todoEdit, todos } from "../redux/actions/actions";
+import { useNavigate } from "react-router-dom";
 
 const Card = (props) => {
-  const { title, desc, author, created, expire, todoId } = props;
+  const {
+    title,
+    desc,
+    author,
+    created,
+    expire,
+    todoId,
+    priority,
+    status,
+    category,
+  } = props;
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const deleteTodo = async () => {
     const remainTodos = await TodoApi("delete", `/delete/${todoId}`);
     dispatch(todos(remainTodos));
+  };
+
+  const editTodo = () => {
+    const todo = {
+      _id: todoId,
+      title,
+      description: desc,
+      owner: author,
+      due_date: expire,
+      priority,
+      status,
+      category,
+    };
+
+    dispatch(todoEdit(todo));
+    navigate("/create");
   };
 
   return (
@@ -24,6 +54,7 @@ const Card = (props) => {
           <button
             type="button"
             className="text-gray-400 bg-gray-700 p-1 rounded-md"
+            onClick={editTodo}
           >
             <BiSolidEditAlt />
           </button>
@@ -38,20 +69,8 @@ const Card = (props) => {
       </div>
 
       <div className="space-y-1">
-        <h2
-          className={`outline-none capitalize`}
-          contentEditable={true}
-          suppressContentEditableWarning={true}
-        >
-          {title}
-        </h2>
-        <p
-          className={`outline-none`}
-          contentEditable={true}
-          suppressContentEditableWarning={true}
-        >
-          {desc}
-        </p>
+        <h2 className={`outline-none capitalize break-words`}>{title}</h2>
+        <p className={`outline-none break-words`}>{desc}</p>
       </div>
 
       <div className="flex items-center justify-between text-xs">

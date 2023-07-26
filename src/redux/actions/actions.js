@@ -4,3 +4,10 @@ export const todos = (data) => {
     payload: data,
   };
 };
+
+export const todoEdit = (id) => {
+  return {
+    type: "TODO_EDIT",
+    payload: id,
+  };
+};

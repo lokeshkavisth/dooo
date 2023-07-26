@@ -7,7 +7,7 @@ const NoTodos = () => {
       <div className="space-y-6">
         <h1 className="text-9xl text-purple-300">OOPS!!</h1>
         <h2 className="pb-2">You don&rsquo;t have any todo&rsquo;s yet!</h2>
-        <Link to={"/"}>
+        <Link to={"/create"}>
           <Button text={"Create Todo"} type="button" />
         </Link>
       </div>

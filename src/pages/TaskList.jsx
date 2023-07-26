@@ -10,7 +10,7 @@ const Button = lazy(() => import("../components/Button"));
 
 const TaskList = () => {
   const dispatch = useDispatch();
-  const TODOS = useSelector((state) => state.todoReducer);
+  const { TODOS } = useSelector((state) => state.todoReducer);
 
   const fetchData = async () => {
     const allTodos = await TodoApi("get", "/");
@@ -45,7 +45,17 @@ const TaskList = () => {
             >
               <Masonry gutter={"15px"}>
                 {TODOS?.map(
-                  ({ _id, title, description, owner, created, due_date }) => (
+                  ({
+                    _id,
+                    title,
+                    description,
+                    owner,
+                    created,
+                    due_date,
+                    priority,
+                    status,
+                    category,
+                  }) => (
                     <div key={_id}>
                       <Card
                         title={title}
@@ -54,6 +64,9 @@ const TaskList = () => {
                         created={created?.split("T")[0]}
                         expire={due_date?.split("T")[0]}
                         todoId={_id}
+                        priority={priority}
+                        status={status}
+                        category={category}
                       />
                     </div>
                   )
