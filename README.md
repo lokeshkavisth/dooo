@@ -1,6 +1,8 @@
 <h1 align='center'>Dooo : Online Task Manager</h1>
 
----
+![Screenshot (2)](https://github.com/lokeshkavisth/dooo/assets/104786100/cb671a9b-e57d-4efc-bb94-844d374f8338)
+![Screenshot (3)](https://github.com/lokeshkavisth/dooo/assets/104786100/977ccbac-c490-4697-aa89-4acf3d4b4f2e)
+
 
 ## Overview
 
