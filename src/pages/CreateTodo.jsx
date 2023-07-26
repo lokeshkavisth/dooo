@@ -14,18 +14,34 @@ const CreateTodo = () => {
 
   const dispatch = useDispatch();
 
-  const [todoData, setTodoData] = useState({
-    title: EDIT_TODO?.title ? EDIT_TODO?.title : "",
-    description: EDIT_TODO?.description ? EDIT_TODO?.description : "",
-    owner: EDIT_TODO?.owner ? EDIT_TODO?.owner : "",
-    priority: EDIT_TODO?.priority ? EDIT_TODO?.priority : "",
-    status: EDIT_TODO?.status ? EDIT_TODO?.status : "",
-    due_date: EDIT_TODO?.due_date ? EDIT_TODO?.due_date : "",
-    category: EDIT_TODO?.category ? EDIT_TODO?.category : "",
-  });
+  const initialState = {
+    title: EDIT_TODO?.title || "",
+    description: EDIT_TODO?.description || "",
+    owner: EDIT_TODO?.owner || "",
+    priority: EDIT_TODO?.priority || "low",
+    status: EDIT_TODO?.status || "progress",
+    due_date: EDIT_TODO?.due_date || "",
+    category: EDIT_TODO?.category || "personal",
+  };
+
+  const [todoData, setTodoData] = useState(initialState);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setError("");
+
+    if (
+      !todoData.title ||
+      !todoData.description ||
+      !todoData.owner ||
+      !todoData.due_date
+    ) {
+      setError("All fields are required fields.");
+      return;
+    }
+
     const title = e.target.title.value;
     const description = e.target.description.value;
     const owner = e.target.owner.value;
@@ -44,23 +60,27 @@ const CreateTodo = () => {
       category,
     });
 
-    if (
-      EDIT_TODO.title &&
-      EDIT_TODO.description &&
-      EDIT_TODO.owner &&
-      EDIT_TODO.priority &&
-      EDIT_TODO.status &&
-      EDIT_TODO.due_date &&
-      EDIT_TODO.category
-    ) {
-      const todoId = EDIT_TODO._id;
-      await TodoApi("put", `/update/${todoId}`, todoData);
-      dispatch(todoEdit());
-      setTodoData({});
+    try {
+      if (
+        EDIT_TODO._id &&
+        EDIT_TODO.title &&
+        EDIT_TODO.description &&
+        EDIT_TODO.owner &&
+        EDIT_TODO.priority &&
+        EDIT_TODO.status &&
+        EDIT_TODO.due_date &&
+        EDIT_TODO.category
+      ) {
+        const todoId = EDIT_TODO._id;
+        await TodoApi("put", `/update/${todoId}`, todoData);
+        dispatch(todoEdit());
+      } else {
+        await TodoApi("post", "/add", todoData);
+      }
+      setTodoData(initialState);
       navigate("/todos");
-    } else {
-      await TodoApi("post", "/add", todoData);
-      navigate("/todos");
+    } catch (error) {
+      setError("Error occurred while saving the todo. Please try again.");
     }
   };
 
@@ -172,6 +192,13 @@ const CreateTodo = () => {
             </select>
           </div>
         </div>
+
+        {error && (
+          <div className="text-red-500">
+            <p>{error}</p>
+          </div>
+        )}
+
         <Button type={"submit"} text={"Create"} />
       </form>
     </div>
