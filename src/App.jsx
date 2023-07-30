@@ -11,10 +11,10 @@ const App = () => {
       <Layout>
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/todos" element={<TaskList />} />
+          <Route path="/" element={<TaskList />} />
           <Route path="/checklist" element={<CheckList />} />
           <Route path="/create" element={<CreateTodo />} />
-          <Route path="*" element={<Navigate to={"/todos"} />} />
+          <Route path="*" element={<Navigate to={"/"} />} />
         </Routes>
       </Layout>
     </menu>
