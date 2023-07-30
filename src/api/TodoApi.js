@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const TodoApi = async (verbs, endPoint, data) => {
-  const URL = `http://localhost:3001/todos${endPoint}`;
+  const API_URL = import.meta.env.VITE_APP_DB_URL;
+
+  const URL = API_URL + endPoint;
+
   const options = {
     method: verbs,
     url: URL,
