@@ -28,54 +28,46 @@ const TaskList = () => {
 
   return (
     <div>
-      {TODOS?.length <= 0 ? (
-        <NoTodos />
-      ) : (
-        <div>
-          <Suspense fallback={<Spinner />}>
-            <div className="mb-4 sticky top-0">
-              <Button
-                type="button"
-                fn={deleteAllTodos}
-                text="Delete all todo&rsquo;s"
-              />
-            </div>
-            <ResponsiveMasonry
-              columnsCountBreakPoints={{ 100: 1, 900: 2, 1200: 3, 1600: 4 }}
-            >
-              <Masonry gutter={"15px"}>
-                {TODOS?.map(
-                  ({
-                    _id,
-                    title,
-                    description,
-                    owner,
-                    created,
-                    due_date,
-                    priority,
-                    status,
-                    category,
-                  }) => (
-                    <div key={_id}>
-                      <Card
-                        title={title}
-                        desc={description}
-                        author={owner}
-                        created={created?.split("T")[0]}
-                        expire={due_date?.split("T")[0]}
-                        todoId={_id}
-                        priority={priority}
-                        status={status}
-                        category={category}
-                      />
-                    </div>
-                  )
-                )}
-              </Masonry>
-            </ResponsiveMasonry>
-          </Suspense>
-        </div>
-      )}
+      <div className="mb-4 sticky top-0">
+        <Button
+          type="button"
+          fn={deleteAllTodos}
+          text="Delete all todo&rsquo;s"
+        />
+      </div>
+      <ResponsiveMasonry
+        columnsCountBreakPoints={{ 100: 1, 900: 2, 1200: 3, 1600: 4 }}
+      >
+        <Masonry gutter={"15px"}>
+          {TODOS?.map(
+            ({
+              _id,
+              title,
+              description,
+              owner,
+              created,
+              due_date,
+              priority,
+              status,
+              category,
+            }) => (
+              <div key={_id}>
+                <Card
+                  title={title}
+                  desc={description}
+                  author={owner}
+                  created={created?.split("T")[0]}
+                  expire={due_date?.split("T")[0]}
+                  todoId={_id}
+                  priority={priority}
+                  status={status}
+                  category={category}
+                />
+              </div>
+            )
+          )}
+        </Masonry>
+      </ResponsiveMasonry>
     </div>
   );
 };
